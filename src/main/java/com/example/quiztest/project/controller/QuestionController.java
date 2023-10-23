@@ -1,4 +1,4 @@
 package com.example.quiztest.project.controller;
 
-public class UserController {
+public class QuestionController {
 }

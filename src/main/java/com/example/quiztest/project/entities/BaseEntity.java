@@ -14,7 +14,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public class BaseEntity {
@@ -28,6 +27,5 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
     @Column(nullable = false)
-    @ColumnDefault(value = "false")
-    private Boolean deleted;
+    private Boolean deleted = false;
 }

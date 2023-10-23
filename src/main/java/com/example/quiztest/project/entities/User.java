@@ -1,6 +1,6 @@
 package com.example.quiztest.project.entities;
 
-import com.example.quiztest.project.entities.enums.UserRole;
+import com.example.quiztest.project.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Entity
+@Entity(name = "users")
 public class User extends BaseEntity {
     private String firstName;
     private String lastName;

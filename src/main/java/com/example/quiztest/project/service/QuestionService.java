@@ -1,2 +1,6 @@
-package com.example.quiztest.project.service;public interface QuestionService {
+package com.example.quiztest.project.service;
+
+import com.example.quiztest.project.entities.Question;
+
+public interface QuestionService  {
 }

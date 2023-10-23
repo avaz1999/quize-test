@@ -1,4 +1,5 @@
-package com.example.quiztest.project.entities.enums;
+package com.example.quiztest.project.enums;
 
 public enum UserRole {
+    ADMIN,USER
 }

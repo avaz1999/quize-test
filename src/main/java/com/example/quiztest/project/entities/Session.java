@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,7 @@ import java.util.TimerTask;
 @Builder
 @Entity
 public class Session extends BaseEntity {
-    private TimerTask time;
+    private Time time;
     private double result;
     private short numberOfTests;
     private short correctAnswer;

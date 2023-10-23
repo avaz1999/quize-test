@@ -1,4 +1,6 @@
 package com.example.quiztest.project.service;
 
-public interface SessionService {
+import com.example.quiztest.project.entities.Session;
+
+public interface SessionService  {
 }
