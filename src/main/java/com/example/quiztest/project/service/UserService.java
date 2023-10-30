@@ -1,14 +1,14 @@
 package com.example.quiztest.project.service;
 
-import com.example.quiztest.project.dto.UserDto;
-import com.example.quiztest.project.entities.User;
+import com.example.quiztest.project.base.ApiResponse;
+import com.example.quiztest.project.dto.UserDTO;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
-public interface UserService  {
-    void create(UserDto dto);
-    String edit(Long id, UserDto dto);
-    List<UserDto> getAll();
-    UserDto getOne(Long id);
-    void delete(Long id);
+public interface UserService {
+    ApiResponse<?> getAll(Pageable pageable);
+
+    ApiResponse<?> getOne(Long id);
+
+    ApiResponse<?> create(UserDTO dto);
 }

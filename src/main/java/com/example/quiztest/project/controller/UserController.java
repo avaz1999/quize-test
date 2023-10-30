@@ -1,41 +1,32 @@
 package com.example.quiztest.project.controller;
 
-import com.example.quiztest.project.dto.UserDto;
+import com.example.quiztest.project.base.ApiResponse;
+import com.example.quiztest.project.dto.UserDTO;
 import com.example.quiztest.project.service.UserService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("users")
 public class UserController {
-    private final UserService service;
+    private final UserService userService;
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("add")
-    public String create(){
-        return "user-form";
-    }
-
-    @PostMapping("save")
-    public String saveUser(
-             UserDto dto){
-        service.create(dto);
-        return "redirect:/users/all";
+    @GetMapping
+    public ResponseEntity<?> getAll(Pageable pageable){
+        return ApiResponse.controller(userService.getAll(pageable));
     }
 
     @GetMapping("{id}")
-    public String getById(@PathVariable Long id,Model model){
-        model.addAttribute("getOne",service.getOne(id));
-        return "user-by-id";
+    public ResponseEntity<?> getOne(@PathVariable Long id){
+        return ApiResponse.controller(userService.getOne(id));
     }
-
-    @GetMapping("all")
-    public String getAll(Model model){
-        model.addAttribute("users",service.getAll());
-        return "all-users";
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody UserDTO dto){
+        return ApiResponse.controller(userService.create(dto));
     }
 }
