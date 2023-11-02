@@ -3,6 +3,7 @@ package com.example.quiztest.project.controller;
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.UserDTO;
 import com.example.quiztest.project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,9 @@ public class UserController {
     public ResponseEntity<?> getOne(@PathVariable Long id){
         return ApiResponse.controller(userService.getOne(id));
     }
+
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody UserDTO dto){
+    public ResponseEntity<?> create(@Valid @RequestBody UserDTO dto){
         return ApiResponse.controller(userService.create(dto));
     }
 }

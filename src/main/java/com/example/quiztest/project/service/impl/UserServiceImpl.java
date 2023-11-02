@@ -3,6 +3,7 @@ package com.example.quiztest.project.service.impl;
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.UserDTO;
 import com.example.quiztest.project.entity.User;
+import com.example.quiztest.project.enums.UserRole;
 import com.example.quiztest.project.exception.UserNotFoundException;
 import com.example.quiztest.project.repositories.UserRepository;
 import com.example.quiztest.project.service.UserService;
@@ -48,6 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse<?> create(UserDTO dto) {
-        return null;
+        var user = User.builder()
+                .fullName(dto.getFullName())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .role(UserRole.USER)
+                .build();
+        repository.save(user);
+        return new ApiResponse<>(true,ResponseMessage.SUCCESS);
     }
 }

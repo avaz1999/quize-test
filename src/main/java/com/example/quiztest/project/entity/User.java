@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity(name = "users")
 public class User extends BaseEntity {
     private String fullName;
