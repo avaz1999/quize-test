@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface UserService {
+    ApiResponse<?> create(UserDTO dto);
+
     ApiResponse<?> getAll(Pageable pageable);
 
     ApiResponse<?> getOne(Long id);
-
-    ApiResponse<?> create(UserDTO dto);
 }

@@ -1,15 +1,12 @@
 package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.QuestionDTO;
-import com.example.quiztest.project.dto.QuestionEditDTO;
-import org.springframework.data.domain.Pageable;
+import com.example.quiztest.project.dto.QuestionRequest;
+
+import java.awt.print.Pageable;
 
 public interface QuestionService {
-    ApiResponse<?> getAll(Pageable pageable);
+    ApiResponse<?> create(QuestionRequest request,Long categoryId);
     ApiResponse<?> getOne(Long id);
-    ApiResponse<?> create(QuestionDTO dto);
-    ApiResponse<?> edit(Long id, QuestionEditDTO dto);
-
-    ApiResponse<?> delete(Long id);
+    ApiResponse<?> getAll(Pageable pageable);
 }

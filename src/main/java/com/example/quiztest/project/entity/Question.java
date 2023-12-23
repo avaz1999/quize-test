@@ -1,54 +1,34 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.QuestionDTO;
+import com.example.quiztest.project.dto.QuestionRequest;
 import com.example.quiztest.project.enums.Difficulty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 @Entity
 public class Question extends BaseEntity {
-    private String questionTitle;
-    private String option1;
-    private String option2;
-    private String option3;
-    private String option4;
-    private String rightAnswer;
+    private String title;
     @Enumerated(EnumType.STRING)
-    private Difficulty difficulty;
+    private Difficulty difficulty = Difficulty.EASY;
     @OneToOne
     private Category category;
 
-    public static Question edit(Question q) {
-        q.setQuestionTitle(q.getQuestionTitle() != null ? q.getQuestionTitle() : q.questionTitle);
-        q.setOption1(q.getOption1() != null ? q.getOption1() : q.option1);
-        q.setOption2(q.getOption1() != null ? q.getOption2() : q.option2);
-        q.setOption3(q.getOption1() != null ? q.getOption3() : q.option3);
-        q.setOption4(q.getOption1() != null ? q.getOption4() : q.option4);
-        q.setRightAnswer(q.getRightAnswer() != null ? q.getRightAnswer() : q.rightAnswer);
-        q.setDifficulty(q.getDifficulty() != null ? q.getDifficulty() : q.difficulty);
-        q.setCategory(q.getCategory() != null ? q.getCategory() : q.category);
-        return q;
-    }
-
-    public static Question create(QuestionDTO dto) {
-        return new Question(
-                dto.getQuestionTitle(),
-                dto.getOption1(),
-                dto.getOption2(),
-                dto.getOption3(),
-                dto.getOption4(),
-                dto.getRightAnswer(),
-                dto.getDifficulty(),
-                dto.getCategory()
-        );
+    public static Question create(QuestionRequest request, Category category) {
+        Question question = new Question();
+        question.setTitle(request.getTitle());
+        question.setDifficulty(request.getDifficulty());
+        question.setCategory(category);
+        return question;
     }
 }

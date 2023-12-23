@@ -1,0 +1,14 @@
+package com.example.quiztest.project.service;
+
+import com.example.quiztest.project.base.ApiResponse;
+import com.example.quiztest.project.dto.CategoryRequest;
+
+import java.awt.print.Pageable;
+
+public interface CategoryService {
+    ApiResponse<?> create(CategoryRequest request);
+    ApiResponse<?> getOne(Long id);
+    ApiResponse<?> getAll(Pageable pageable);
+    ApiResponse<?> edit(Long id,CategoryRequest request);
+    ApiResponse<?> delete(Long id);
+}
