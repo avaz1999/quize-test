@@ -27,7 +27,7 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(Exception.class)
     ResponseEntity<?> handleException(Exception e) {
-        Map<String, Object> fields = null;
+        Map<String, Object> fields ;
         if (e instanceof QuizTestException) {
             return ResponseEntity
                     .badRequest()

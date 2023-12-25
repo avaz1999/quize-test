@@ -8,9 +8,9 @@ import com.example.quiztest.project.repositories.CategoryRepository;
 import com.example.quiztest.project.repositories.QuestionRepository;
 import com.example.quiztest.project.service.CategoryService;
 import com.example.quiztest.project.utils.ResponseMessage;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -22,7 +22,4 @@ public class Quiz extends BaseEntity {
     private List<Question> questions = new ArrayList<>();
     @ManyToOne
     private User user;
-    @ManyToOne
-    private List<UserTestResult> userTestResults = new ArrayList<>();
-
 }

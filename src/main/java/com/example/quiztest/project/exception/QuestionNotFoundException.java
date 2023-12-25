@@ -2,9 +2,9 @@ package com.example.quiztest.project.exception;
 
 import com.example.quiztest.project.enums.ErrorCode;
 
-public class RightAnswerLimitException extends QuizTestException{
+public class QuestionNotFoundException extends QuizTestException{
     @Override
     public ErrorCode errorType() {
-        return ErrorCode.RIGHT_ANSWER_LIMIT;
+        return ErrorCode.QUESTION_NOT_FOUND;
     }
 }

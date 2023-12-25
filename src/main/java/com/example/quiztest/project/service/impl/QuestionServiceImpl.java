@@ -8,6 +8,7 @@ import com.example.quiztest.project.entity.Category;
 import com.example.quiztest.project.entity.Question;
 import com.example.quiztest.project.exception.AnswerSizeException;
 import com.example.quiztest.project.exception.CategoryNotFountException;
+import com.example.quiztest.project.exception.QuestionNotFoundException;
 import com.example.quiztest.project.exception.RightAnswerLimitException;
 import com.example.quiztest.project.repositories.AnswerRepository;
 import com.example.quiztest.project.repositories.CategoryRepository;
@@ -38,29 +39,16 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public ApiResponse<?> create(QuestionRequest request, Long categoryId) {
-
-        //check if the category exists
-
         Category category = categoryRepository.findByIdAndDeletedFalse(categoryId);
         if (category == null) throw new CategoryNotFountException();
-
-        //check if there are at least two answer
-
         if (request.getAnswers().size() < 2) throw new AnswerSizeException();
-
-        // Check if there is at least one correct answer
-
         if (!hasCorrectAnswer(request.getAnswers())) {
             throw new RightAnswerLimitException();
         }
-
-        // Create the question and associated answers
-
         Question question = Question.create(request, category);
-
         List<Answer> answers = request.getAnswers().stream()
-                        .map(answer -> Answer.create(answer,question))
-                                .toList();
+                .map(answer -> Answer.create(answer, question))
+                .toList();
         answerRepository.saveAll(answers);
         repository.save(question);
         return new ApiResponse<>(true, ResponseMessage.SUCCESS);
@@ -68,15 +56,25 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public ApiResponse<?> getOne(Long id) {
-        return null;
+        Question question = repository.findByIdAndDeletedFalse(id);
+        if (question == null) throw new QuestionNotFoundException();
+        List<Answer> answers = answerRepository.findAllByQuestionIdAndDeletedFalse(question.getId());
+        QuestionRequest request = QuestionRequest.toDto(question, answers);
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, request);
     }
 
     @Override
     public ApiResponse<?> getAll(Pageable pageable) {
-        return null;
+        List<Question> questionList = repository.findAllNotDeleted();
+        List<QuestionRequest> questionRequests = questionList.stream()
+                .map(question -> {
+                    List<Answer> answers = answerRepository.findAllByQuestionIdAndDeletedFalse(question.getId());
+                    return QuestionRequest.toDto(question, answers);
+                }).toList();
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, questionRequests);
     }
 
     private boolean hasCorrectAnswer(List<AnswerRequest> answers) {
-        return answers.stream().anyMatch(AnswerRequest::getRight);
+        return answers.stream().anyMatch(AnswerRequest::getAnswerRight);
     }
 }

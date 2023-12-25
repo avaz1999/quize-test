@@ -6,8 +6,9 @@ public enum ErrorCode {
     NOT_ALLOWED(102),
     TYPE_MISMATCH_ERROR(103),
     CATEGORY_NOT_FOUND(200),
-    AnswerSizeException(300),
-    RightAnswerLimit(301);
+    ANSWER_SIZE_EXCEPTION(300),
+    RIGHT_ANSWER_LIMIT(301),
+    QUESTION_NOT_FOUND(400);
     private final int code;
 
     ErrorCode(int code) {

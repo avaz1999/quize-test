@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Answer extends BaseEntity {
     private String answer;
-    private Boolean right = false;
+    private Boolean answerRight = false;
     @OneToOne
     private Question question;
 
     public static Answer create(AnswerRequest request,Question question) {
         Answer answer = new Answer();
         answer.setAnswer(request.getAnswer());
-        answer.setRight(request.getRight());
+        answer.setAnswerRight(request.getAnswerRight());
         answer.setQuestion(question);
         return answer;
     }
