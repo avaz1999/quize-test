@@ -18,17 +18,18 @@ public class QuestionRequest {
     private Long id;
     private String title;
     private Difficulty difficulty;
-    private Category category;
+    private CategoryForQuestionRequest category;
     private List<AnswerRequest> answers;
 
     public static QuestionRequest toDto(Question q, List<Answer> answers) {
         List<AnswerRequest> answerRequestList = answers.stream().map(AnswerRequest::toDto).toList();
+        CategoryForQuestionRequest categoryRequest = CategoryForQuestionRequest.toDto(q.getCategory());
         QuestionRequest request = new QuestionRequest();
         request.setId(q.getId());
         request.setTitle(q.getTitle());
         request.setDifficulty(q.getDifficulty());
-        request.setCategory(q.getCategory());
+        request.setCategory(categoryRequest);
         request.setAnswers(answerRequestList);
-        return null;
+        return request;
     }
 }

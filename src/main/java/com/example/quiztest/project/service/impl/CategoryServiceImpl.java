@@ -68,6 +68,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryRequest getCategoryRequest(Category category) {
         Integer count = questionRepository.countAllByCategoryIdAndDeletedFalse(category.getId());
-        return new CategoryRequest(category.getName(), count);
+        return new CategoryRequest(category.getId(), category.getName(), count);
     }
 }

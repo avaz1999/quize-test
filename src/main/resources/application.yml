@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/quiz_app
     username: postgres
+    url: jdbc:postgresql://localhost:5432/quiz_app
     password: root123
   jpa:
     properties:
@@ -11,17 +11,8 @@ spring:
         naming:
           implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
         temp:
-          use_jdbc_metadata_defaults: false
-    show-sql: true
+          use_jdbc_metadata_defaults: 'false'
+    show-sql: 'true'
     hibernate:
-      ddl-auto: create
-#      ddl-auto: update
-  main:
-    allow-circular-references: true
-logging:
-  level:
-    org:
-      springframework:
-        data: DEBUG
-        jdbc: DEBUG
-        jpa: DEBUG
+#      ddl-auto: create
+      ddl-auto: update

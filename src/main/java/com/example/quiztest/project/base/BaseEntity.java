@@ -2,6 +2,7 @@ package com.example.quiztest.project.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
@@ -43,10 +45,6 @@ public abstract class BaseEntity extends SerializableImpl {
 
     private Boolean deleted = false;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public BaseEntity(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -57,27 +55,4 @@ public abstract class BaseEntity extends SerializableImpl {
     public BaseEntity() {
     }
 
-    public void setDeletedBy(Long deletedBy) {
-        this.deletedBy = deletedBy;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setModifiedBy(Long modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }

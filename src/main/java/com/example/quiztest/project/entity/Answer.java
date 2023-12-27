@@ -2,8 +2,7 @@ package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
 import com.example.quiztest.project.dto.AnswerRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Answer extends BaseEntity {
     private String answer;
     private Boolean answerRight = false;
-    @OneToOne
+    @ManyToOne
     private Question question;
 
     public static Answer create(AnswerRequest request,Question question) {

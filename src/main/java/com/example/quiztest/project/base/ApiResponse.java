@@ -1,8 +1,12 @@
 package com.example.quiztest.project.base;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 
+@Setter
+@Getter
 public class ApiResponse<T> extends BaseDto {
 
     private boolean success;
@@ -37,30 +41,6 @@ public class ApiResponse<T> extends BaseDto {
     }
 
     public ApiResponse() {
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getObject() {
-        return object;
-    }
-
-    public void setObject(T object) {
-        this.object = object;
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> controller(ApiResponse<T> apiResponse) {
