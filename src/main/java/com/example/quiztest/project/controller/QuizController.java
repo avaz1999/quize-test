@@ -18,7 +18,7 @@ public class QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody QuizRequest request){
-        return ApiResponse.controller(service.create(request));
+    public ResponseEntity<?> create(@RequestParam Short pageSize,@Valid @RequestBody QuizRequest request){
+        return ApiResponse.controller(service.create(request,pageSize));
     }
 }

@@ -10,7 +10,8 @@ public enum ErrorCode {
     ANSWER_NOT_FOUND(301),
     RIGHT_ANSWER_LIMIT(301),
     QUESTION_NOT_FOUND(400),
-    OBJECT_IS_NULL(500);
+    OBJECT_IS_NULL(500),
+    QUIZ_NOT_FOUND(600);
     private final int code;
 
     ErrorCode(int code) {

@@ -6,7 +6,7 @@ import com.example.quiztest.project.dto.QuizRequest;
 import java.awt.print.Pageable;
 
 public interface QuizService {
-    ApiResponse<?> create(QuizRequest request);
+    ApiResponse<?> create(QuizRequest request, Short pageSize);
     ApiResponse<?> getOne(Long id);
     ApiResponse<?> getAll(Pageable pageable);
     ApiResponse<?> getAllByCategory();

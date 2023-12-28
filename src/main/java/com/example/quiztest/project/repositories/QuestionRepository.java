@@ -24,13 +24,13 @@ public interface QuestionRepository extends BaseRepository<Question> {
     Page<Question> findAllByFilter(@Param("categoryName") String categoryName, Pageable pageable);
 
 
-@Query(value = """
+@Query(nativeQuery = true,value = """
         select q
-                from Question q
-                join Category  c on q.category.id = c.id
+                from question q
+                join category  c on q.category_id = c.id
                 where (:category is null
                         or lower(c.name) like lower(concat('%',:category,'%')))
                         and q.deleted = false and c.deleted = false
-                        order by function('RANDOM') limit 30""")
+                        order by random() limit :pageSize""")
     List<Question> getForQuiz(@Param("category") String category,@Param("pageSize") Short pageSize);
 }

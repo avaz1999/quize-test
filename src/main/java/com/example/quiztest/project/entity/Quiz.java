@@ -6,6 +6,7 @@ import com.example.quiztest.project.enums.QuizStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,15 +23,19 @@ public class Quiz extends BaseEntity {
     private Long time;
     private QuizStatus status;
     private Short questionSize;
+    @OneToOne
+    private Category category;
     @ManyToMany
     private List<Question> questions = new ArrayList<>();
     @ManyToOne
     private User user;
 
-    public static Quiz create(QuizRequest request) {
+    public static Quiz create(QuizRequest request, Short pageSize, Category category) {
         Quiz quiz = new Quiz();
         quiz.setStatus(QuizStatus.CREATE);
         quiz.setTime(request.getTime());
+        quiz.setQuestionSize(pageSize);
+        quiz.setCategory(category);
         return quiz;
     }
 }
