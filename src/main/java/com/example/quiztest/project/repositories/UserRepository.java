@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserRepository extends BaseRepository<User> {
     List<User> findAllByDeletedFalse(Pageable pageable);
     User findByIdAndDeletedFalse(Long id);
+    User findByUsernameAndDeletedFalse(String username);
 
     boolean existsByUsernameAndDeletedFalse(String username);
 }

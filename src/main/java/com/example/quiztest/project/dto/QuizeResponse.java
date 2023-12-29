@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CreateQuizRequest {
+public class QuizeResponse {
     private String userFullName;
     private String username;
     private String password;
     private String categoryName;
     private Short questionCount;
 
-    public static CreateQuizRequest toDto(User user, Quiz quiz, QuizRequest quizRequest) {
-        CreateQuizRequest request = new CreateQuizRequest();
+    public static QuizeResponse toDto(User user, Quiz quiz, QuizRequest quizRequest) {
+        QuizeResponse request = new QuizeResponse();
         request.setUserFullName(request.userFullName);
         request.setCategoryName(quizRequest.getCategory().getName());
         request.setQuestionCount(quiz.getQuestionSize());

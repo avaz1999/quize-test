@@ -1,42 +1,46 @@
 package com.example.quiztest.project.service.impl;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.CreateQuizRequest;
-import com.example.quiztest.project.dto.QuizRequest;
-import com.example.quiztest.project.entity.Category;
-import com.example.quiztest.project.entity.Question;
-import com.example.quiztest.project.entity.Quiz;
-import com.example.quiztest.project.entity.User;
+import com.example.quiztest.project.dto.*;
+import com.example.quiztest.project.entity.*;
+import com.example.quiztest.project.enums.QuizStatus;
 import com.example.quiztest.project.enums.UserRole;
 import com.example.quiztest.project.exception.CategoryNotFountException;
 import com.example.quiztest.project.exception.QuizNotFoundException;
-import com.example.quiztest.project.repositories.CategoryRepository;
-import com.example.quiztest.project.repositories.QuestionRepository;
-import com.example.quiztest.project.repositories.QuizRepository;
-import com.example.quiztest.project.repositories.UserRepository;
+import com.example.quiztest.project.repositories.*;
 import com.example.quiztest.project.service.QuizService;
 import com.example.quiztest.project.utils.ResponseMessage;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Stream;
 
 @Service
 public class QuizServiceImpl implements QuizService {
     private final QuizRepository repository;
-    private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
+    private final QuestionRepository questionRepository;
     private final CategoryRepository categoryRepository;
+    private final UserTestResultRepository userTestResultRepository;
+    private final AnswerRepository answerRepository;
 
-    public QuizServiceImpl(QuizRepository repository, QuestionRepository questionRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public QuizServiceImpl(QuizRepository repository, UserRepository userRepository, QuestionRepository questionRepository, CategoryRepository categoryRepository, UserTestResultRepository userTestResultRepository, AnswerRepository answerRepository) {
         this.repository = repository;
-        this.questionRepository = questionRepository;
         this.userRepository = userRepository;
+        this.questionRepository = questionRepository;
         this.categoryRepository = categoryRepository;
+        this.userTestResultRepository = userTestResultRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Override
+    @Transactional
     public ApiResponse<?> create(QuizRequest request, Short pageSize) {
         User user = new User();
         user.setFullName(request.getUserFullName());
@@ -54,7 +58,9 @@ public class QuizServiceImpl implements QuizService {
         Quiz quiz = Quiz.create(request, pageSize, category);
         userRepository.save(user);
         repository.save(quiz);
-        CreateQuizRequest quizRequest = CreateQuizRequest.toDto(user, quiz, request);
+        UserTestResult result = UserTestResult.create(quiz, user);
+        userTestResultRepository.save(result);
+        QuizeResponse quizRequest = QuizeResponse.toDto(user, quiz, request);
         return new ApiResponse<>(true, ResponseMessage.SUCCESS, quizRequest);
     }
 
@@ -70,11 +76,51 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public ApiResponse<?> getAll(Pageable pageable) {
-        return null;
+        Page<Quiz> quizList = repository.findAllByDeletedFalse(pageable);
+        List<QuizRequest> requests = quizList.stream().map(QuizRequest::toDto).toList();
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, requests);
     }
 
     @Override
-    public ApiResponse<?> getAllByCategory() {
+    public ApiResponse<?> getAllByCategory(String categoryName, Pageable pageable) {
+        Category category = categoryRepository.findByNameAndDeletedFalse(categoryName);
+        Page<Quiz> quizzes = repository.findAllByCategoryAndDeletedFalse(category, pageable);
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, quizzes);
+    }
+
+    @Override
+    @Transactional
+    public ApiResponse<?> takeTest(Long quizId) {
+        if (quizId == null) throw new QuizNotFoundException();
+        Quiz quiz = repository.findByIdAndDeletedFalse(quizId);
+        if (quiz == null) throw new QuizNotFoundException();
+        List<Question> quizForUser = questionRepository
+                .getForQuiz(quiz.getCategory().getName(), quiz.getQuestionSize());
+        List<QuestionForTakeTestResponse> responses = quizForUser
+                .stream()
+                .map(question -> {
+                    List<AnswerResponse> answerResponse = answerRepository
+                            .findAllByQuestionIdAndDeletedFalse(question.getId())
+                            .stream()
+                            .map(AnswerResponse::toDto)
+                            .toList();
+                    return QuestionForTakeTestResponse.toDto(question, answerResponse);
+                })
+                .toList();
+        quiz.setStatus(QuizStatus.IN_PROSES);
+        quiz.setQuestions(quizForUser);
+        repository.save(quiz);
+        TakeTestResponse take = TakeTestResponse.toDto(quiz, responses);
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, take);
+    }
+
+    @Override
+    public ApiResponse<?> checkQuiz(Long quizId, CheckRequest request) {
+        if (quizId == null) throw new QuizNotFoundException();
+        Quiz quiz = repository.findByIdAndDeletedFalse(quizId);
+        if (quiz == null) throw new QuizNotFoundException();
+        if (!quiz.getStatus().equals(QuizStatus.IN_PROSES)) throw new QuizNotFoundException();
+        Objects.equals(quiz.getQuestions(),request.getQuestionRequests());
         return null;
     }
 

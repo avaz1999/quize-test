@@ -9,8 +9,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class QuestionRequest {
-    private Long id;
-    private String titile;
-    private List<AnswerRequest> answerRequests;
+public class CheckRequest {
+    private List<QuestionRequest> questionRequests;
 }

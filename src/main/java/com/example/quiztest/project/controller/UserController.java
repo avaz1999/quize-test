@@ -2,6 +2,7 @@ package com.example.quiztest.project.controller;
 
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.UserDTO;
+import com.example.quiztest.project.dto.UserRequest;
 import com.example.quiztest.project.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping
+    public ResponseEntity<?> checkUser(@RequestBody UserRequest request){
+        return ApiResponse.controller(userService.checkUser(request));
     }
 
     @GetMapping

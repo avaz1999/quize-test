@@ -1,7 +1,7 @@
 package com.example.quiztest.project.controller;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.QuestionRequest;
+import com.example.quiztest.project.dto.QuestionResponse;
 import com.example.quiztest.project.service.QuestionService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ public class QuestionController {
         this.service = service;
     }
     @PostMapping("{categoryId}")
-    public ResponseEntity<?> create(@PathVariable Long categoryId, @Valid @RequestBody QuestionRequest request){
+    public ResponseEntity<?> create(@PathVariable Long categoryId, @Valid @RequestBody QuestionResponse request){
         return ApiResponse.controller(service.create(request,categoryId));
     }
     @GetMapping()
@@ -31,7 +31,7 @@ public class QuestionController {
         return ApiResponse.controller(service.getOne(id));
     }
     @PutMapping("{id}")
-    public ResponseEntity<?> edit(@PathVariable Long id,@RequestBody QuestionRequest request){
+    public ResponseEntity<?> edit(@PathVariable Long id,@RequestBody QuestionResponse request){
         return ApiResponse.controller(service.edit(id,request));
     }
     @DeleteMapping("{id}")

@@ -1,7 +1,7 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.QuestionRequest;
+import com.example.quiztest.project.dto.QuestionResponse;
 import com.example.quiztest.project.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class Question extends BaseEntity {
     @ManyToOne
     private Category category;
 
-    public static Question create(QuestionRequest request, Category category) {
+    public static Question create(QuestionResponse request, Category category) {
         Question question = new Question();
         question.setTitle(request.getTitle());
         question.setDifficulty(request.getDifficulty() != null ? request.getDifficulty() : Difficulty.EASY);
@@ -29,7 +29,7 @@ public class Question extends BaseEntity {
         return question;
     }
 
-    public static Question edit(Question question, QuestionRequest request) {
+    public static Question edit(Question question, QuestionResponse request) {
         question.setTitle(request.getTitle() != null ? request.getTitle(): question.getTitle());
         question.setDifficulty(request.getDifficulty());
         return question;

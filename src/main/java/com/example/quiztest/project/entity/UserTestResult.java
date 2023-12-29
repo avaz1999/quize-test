@@ -21,5 +21,14 @@ public class UserTestResult extends BaseEntity {
     private User user;
     @ManyToOne
     private Quiz quiz;
-    private int score;
+    private short numberOfTests;
+    private Integer rightAnswer;
+    private Double score;
+
+    public static UserTestResult create(Quiz quiz, User user) {
+        UserTestResult result = new UserTestResult();
+        result.setQuiz(quiz);
+        result.setUser(user);
+        return result;
+    }
 }
