@@ -53,6 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = repository.findByIdAndDeletedFalse(id);
         if (category == null) throw new CategoryNotFountException();
         Category edit = Category.edit(category, request);
+        repository.save(edit);
         CategoryRequest dto = CategoryRequest.toDto(edit);
         return new ApiResponse<>(true,ResponseMessage.SUCCESS,dto);
     }

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface QuizService {
-    ApiResponse<?> create(QuizRequest request, Short pageSize);
+    ApiResponse<?> create(QuizRequest request);
     ApiResponse<?> getOne(Long id);
     ApiResponse<?> getAll(Pageable pageable);
     ApiResponse<?> getAllByCategory(String categoryName,Pageable pageable);

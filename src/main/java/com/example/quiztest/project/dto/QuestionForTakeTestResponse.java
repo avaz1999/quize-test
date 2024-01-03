@@ -2,6 +2,7 @@ package com.example.quiztest.project.dto;
 
 import com.example.quiztest.project.entity.Question;
 import com.example.quiztest.project.enums.Difficulty;
+import com.example.quiztest.project.projection.GetQuesrionForQuiz;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,11 @@ public class QuestionForTakeTestResponse {
     private Difficulty difficulty;
     private List<AnswerResponse> answers;
 
-    public static QuestionForTakeTestResponse toDto(Question question, List<AnswerResponse> answerResponse) {
+    public static QuestionForTakeTestResponse toDto(GetQuesrionForQuiz question, List<AnswerResponse> answerResponse) {
         QuestionForTakeTestResponse questionResponse = new QuestionForTakeTestResponse();
         questionResponse.setId(question.getId());
         questionResponse.setTitle(question.getTitle());
-        questionResponse.setDifficulty(question.getDifficulty());
+        questionResponse.setDifficulty(Difficulty.valueOf(question.getDifficulty()));
         questionResponse.setAnswers(answerResponse);
         return questionResponse;
     }

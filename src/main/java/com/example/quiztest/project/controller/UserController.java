@@ -18,12 +18,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("check-user")
     public ResponseEntity<?> checkUser(@RequestBody UserRequest request){
         return ApiResponse.controller(userService.checkUser(request));
     }
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<?> getAll(Pageable pageable){
         return ApiResponse.controller(userService.getAll(pageable));
     }

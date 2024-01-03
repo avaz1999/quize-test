@@ -3,6 +3,7 @@ package com.example.quiztest.project.dto;
 import com.example.quiztest.project.entity.Quiz;
 import com.example.quiztest.project.enums.QuizStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,11 +16,8 @@ public class QuizRequest {
     private Long id;
     @NotBlank
     private String userFullName;
-    @NotBlank @Size(min = 10)
     private Short questionSize;
-    @NotBlank
     private Long time;
-    @NotBlank
     private CategoryRequest category;
     private QuizStatus status;
 

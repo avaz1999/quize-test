@@ -15,7 +15,7 @@ import java.util.List;
 public class QuestionResponse {
     private Long id;
     private String title;
-    private Difficulty difficulty;
+    private String difficulty;
     private CategoryForQuestionRequest category;
     private List<AnswerRequest> answers;
 
@@ -25,7 +25,7 @@ public class QuestionResponse {
         QuestionResponse request = new QuestionResponse();
         request.setId(q.getId());
         request.setTitle(q.getTitle());
-        request.setDifficulty(q.getDifficulty());
+        request.setDifficulty(q.getDifficulty().toString());
         request.setCategory(categoryRequest);
         request.setAnswers(answerRequestList);
         return request;

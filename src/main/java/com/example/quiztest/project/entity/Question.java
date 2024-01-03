@@ -21,17 +21,24 @@ public class Question extends BaseEntity {
     @ManyToOne
     private Category category;
 
+    public Question( Long id,String title, Category category, Difficulty difficulty) {
+        super(id);
+        this.title = title;
+        this.category = category;
+        this.difficulty = difficulty;
+    }
+
     public static Question create(QuestionResponse request, Category category) {
         Question question = new Question();
         question.setTitle(request.getTitle());
-        question.setDifficulty(request.getDifficulty() != null ? request.getDifficulty() : Difficulty.EASY);
+        question.setDifficulty(request.getDifficulty() != null ? Difficulty.valueOf(request.getDifficulty()) : Difficulty.EASY);
         question.setCategory(category);
         return question;
     }
 
     public static Question edit(Question question, QuestionResponse request) {
         question.setTitle(request.getTitle() != null ? request.getTitle(): question.getTitle());
-        question.setDifficulty(request.getDifficulty());
+        question.setDifficulty(Difficulty.valueOf(request.getDifficulty()));
         return question;
     }
 }

@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class QuestionRequest {
+public class QuestionForTakeTest {
     private Long id;
-    private String titile;
-    private String answer;
+    private String title;
 }

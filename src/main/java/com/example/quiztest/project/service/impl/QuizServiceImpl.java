@@ -3,23 +3,26 @@ package com.example.quiztest.project.service.impl;
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.*;
 import com.example.quiztest.project.entity.*;
+import com.example.quiztest.project.enums.Difficulty;
 import com.example.quiztest.project.enums.QuizStatus;
 import com.example.quiztest.project.enums.UserRole;
 import com.example.quiztest.project.exception.CategoryNotFountException;
 import com.example.quiztest.project.exception.QuizNotFoundException;
+import com.example.quiztest.project.projection.GetQuesrionForQuiz;
 import com.example.quiztest.project.repositories.*;
 import com.example.quiztest.project.service.QuizService;
 import com.example.quiztest.project.utils.ResponseMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -29,24 +32,27 @@ public class QuizServiceImpl implements QuizService {
     private final CategoryRepository categoryRepository;
     private final UserTestResultRepository userTestResultRepository;
     private final AnswerRepository answerRepository;
+    private final JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public QuizServiceImpl(QuizRepository repository, UserRepository userRepository, QuestionRepository questionRepository, CategoryRepository categoryRepository, UserTestResultRepository userTestResultRepository, AnswerRepository answerRepository) {
+    public QuizServiceImpl(QuizRepository repository, UserRepository userRepository, QuestionRepository questionRepository, CategoryRepository categoryRepository, UserTestResultRepository userTestResultRepository, AnswerRepository answerRepository, JdbcTemplate jdbcTemplate) {
         this.repository = repository;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.categoryRepository = categoryRepository;
         this.userTestResultRepository = userTestResultRepository;
         this.answerRepository = answerRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     @Transactional
-    public ApiResponse<?> create(QuizRequest request, Short pageSize) {
+    public ApiResponse<?> create(QuizRequest request) {
         User user = new User();
         user.setFullName(request.getUserFullName());
         String username;
         username = generateUsername();
-        while (!userRepository.existsByUsernameAndDeletedFalse(username)) {
+        while (userRepository.existsByUsernameAndDeletedFalse(username)) {
             username = generateUsername();
         }
         user.setUsername(username);
@@ -55,7 +61,7 @@ public class QuizServiceImpl implements QuizService {
         user.setRole(UserRole.USER);
         Category category = categoryRepository.findByNameAndDeletedFalse(request.getCategory().getName());
         if (category == null) throw new CategoryNotFountException();
-        Quiz quiz = Quiz.create(request, pageSize, category);
+        Quiz quiz = Quiz.create(request, category);
         userRepository.save(user);
         repository.save(quiz);
         UserTestResult result = UserTestResult.create(quiz, user);
@@ -91,25 +97,31 @@ public class QuizServiceImpl implements QuizService {
     @Override
     @Transactional
     public ApiResponse<?> takeTest(Long quizId) {
-        if (quizId == null) throw new QuizNotFoundException();
+        if (quizId == null) {
+            throw new QuizNotFoundException();
+        }
         Quiz quiz = repository.findByIdAndDeletedFalse(quizId);
         if (quiz == null) throw new QuizNotFoundException();
-        List<Question> quizForUser = questionRepository
-                .getForQuiz(quiz.getCategory().getName(), quiz.getQuestionSize());
-        List<QuestionForTakeTestResponse> responses = quizForUser
-                .stream()
+
+        List<GetQuesrionForQuiz> questionFor = questionRepository.getForQuiz(quiz.getCategory().getName(), quiz.getQuestionSize());
+        List<QuestionForTakeTestResponse> responses = questionFor.stream()
                 .map(question -> {
-                    List<AnswerResponse> answerResponse = answerRepository
+                    List<AnswerResponse> answerResponses = answerRepository
                             .findAllByQuestionIdAndDeletedFalse(question.getId())
                             .stream()
                             .map(AnswerResponse::toDto)
                             .toList();
-                    return QuestionForTakeTestResponse.toDto(question, answerResponse);
+                    return QuestionForTakeTestResponse.toDto(question, answerResponses);
                 })
                 .toList();
+
         quiz.setStatus(QuizStatus.IN_PROSES);
-        quiz.setQuestions(quizForUser);
+        List<Question> questions = questionFor.stream()
+                .map(
+                        i -> new Question(i.getId(),i.getTitle(), quiz.getCategory(), Difficulty.valueOf(i.getDifficulty()))).collect(Collectors.toList());
+        quiz.setQuestions(questions);
         repository.save(quiz);
+
         TakeTestResponse take = TakeTestResponse.toDto(quiz, responses);
         return new ApiResponse<>(true, ResponseMessage.SUCCESS, take);
     }
@@ -117,11 +129,20 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public ApiResponse<?> checkQuiz(Long quizId, CheckRequest request) {
         if (quizId == null) throw new QuizNotFoundException();
+
         Quiz quiz = repository.findByIdAndDeletedFalse(quizId);
-        if (quiz == null) throw new QuizNotFoundException();
-        if (!quiz.getStatus().equals(QuizStatus.IN_PROSES)) throw new QuizNotFoundException();
-        Objects.equals(quiz.getQuestions(),request.getQuestionRequests());
-        return null;
+        if (quiz == null || !quiz.getStatus().equals(QuizStatus.IN_PROSES)) throw new QuizNotFoundException();
+        int count = (int) quiz.getQuestions().stream()
+                .flatMap(question -> request.getQuestionRequests().stream()
+                        .filter(questionRequest -> question.getId().equals(questionRequest.getId()))
+                        .flatMap(questionRequest ->
+                                answerRepository.findAllByQuestionIdAndDeletedFalse(question.getId()).stream()
+                                        .filter(Answer::getAnswerRight)
+                                        .filter(answer -> answer.getAnswer().equals(questionRequest.getAnswer()))
+                        )
+                )
+                .count();
+        return new ApiResponse<>(true, ResponseMessage.SUCCESS, count);
     }
 
     private String generateUsername() {

@@ -20,8 +20,8 @@ public class QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam Short pageSize,@Valid @RequestBody QuizRequest request){
-        return ApiResponse.controller(service.create(request,pageSize));
+    public ResponseEntity<?> create(@Valid @RequestBody QuizRequest request){
+        return ApiResponse.controller(service.create(request));
     }
     @GetMapping("{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){
@@ -33,7 +33,7 @@ public class QuizController {
         return ApiResponse.controller(service.getAll(pageable));
     }
 
-    @GetMapping
+    @GetMapping("by-category")
     public ResponseEntity<?> getByCategory(@RequestParam String categoryName,Pageable pageable){
         return ApiResponse.controller(service.getAllByCategory(categoryName,pageable));
     }

@@ -30,11 +30,11 @@ public class Quiz extends BaseEntity {
     @ManyToOne
     private User user;
 
-    public static Quiz create(QuizRequest request, Short pageSize, Category category) {
+    public static Quiz create(QuizRequest request, Category category) {
         Quiz quiz = new Quiz();
         quiz.setStatus(QuizStatus.CREATE);
         quiz.setTime(request.getTime());
-        quiz.setQuestionSize(pageSize);
+        quiz.setQuestionSize(request.getQuestionSize());
         quiz.setCategory(category);
         return quiz;
     }
