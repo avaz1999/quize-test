@@ -18,7 +18,7 @@ public class QuizRequest {
     private String userFullName;
     private Short questionSize;
     private Long time;
-    private CategoryRequest category;
+    private Long categoryId;
     private QuizStatus status;
 
     public static QuizRequest toDto(Quiz quiz) {
@@ -29,7 +29,7 @@ public class QuizRequest {
         request.setTime(quiz.getTime());
         request.setStatus(quiz.getStatus());
         request.setQuestionSize(quiz.getQuestionSize());
-        request.setCategory(categoryRequest);
+        request.setCategoryId(quiz.getCategory().getId());
         return request;
     }
 }

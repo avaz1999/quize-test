@@ -23,7 +23,7 @@ public class Quiz extends BaseEntity {
     private Long time;
     private QuizStatus status;
     private Short questionSize;
-    @OneToOne
+    @ManyToOne
     private Category category;
     @ManyToMany
     private List<Question> questions = new ArrayList<>();

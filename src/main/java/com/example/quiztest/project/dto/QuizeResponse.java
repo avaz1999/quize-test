@@ -13,13 +13,13 @@ public class QuizeResponse {
     private String userFullName;
     private String username;
     private String password;
-    private String categoryName;
+    private Long categoryId;
     private Short questionCount;
 
     public static QuizeResponse toDto(User user, Quiz quiz, QuizRequest quizRequest) {
         QuizeResponse request = new QuizeResponse();
         request.setUserFullName(request.userFullName);
-        request.setCategoryName(quizRequest.getCategory().getName());
+        request.setCategoryId(quizRequest.getCategoryId());
         request.setQuestionCount(quiz.getQuestionSize());
         request.setUsername(user.getUsername());
         request.setPassword(user.getPassword());

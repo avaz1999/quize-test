@@ -44,7 +44,7 @@ public class QuizController {
     }
 
     @GetMapping("check-quiz/{quizId}")
-    public ResponseEntity<?> checkQuiz(@PathVariable Long quizId,@RequestBody CheckRequest request){
+    public ResponseEntity<?> checkQuiz(@PathVariable Long quizId,@Valid @RequestBody CheckRequest request){
         return ApiResponse.controller(service.checkQuiz(quizId,request));
     }
 }

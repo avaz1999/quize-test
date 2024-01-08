@@ -59,10 +59,11 @@ public class QuizServiceImpl implements QuizService {
         String password = generatePassword();
         user.setPassword(password);
         user.setRole(UserRole.USER);
-        Category category = categoryRepository.findByNameAndDeletedFalse(request.getCategory().getName());
+        Category category = categoryRepository.findByIdAndDeletedFalse(request.getCategoryId());
         if (category == null) throw new CategoryNotFountException();
         Quiz quiz = Quiz.create(request, category);
         userRepository.save(user);
+        quiz.setUser(user);
         repository.save(quiz);
         UserTestResult result = UserTestResult.create(quiz, user);
         userTestResultRepository.save(result);
@@ -119,6 +120,7 @@ public class QuizServiceImpl implements QuizService {
         List<Question> questions = questionFor.stream()
                 .map(
                         i -> new Question(i.getId(),i.getTitle(), quiz.getCategory(), Difficulty.valueOf(i.getDifficulty()))).collect(Collectors.toList());
+        Collections.shuffle(questions);
         quiz.setQuestions(questions);
         repository.save(quiz);
 
