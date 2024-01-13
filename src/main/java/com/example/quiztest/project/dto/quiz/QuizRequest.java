@@ -1,10 +1,9 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.quiz;
 
+import com.example.quiztest.project.dto.category.CategoryRequest;
 import com.example.quiztest.project.entity.Quiz;
 import com.example.quiztest.project.enums.QuizStatus;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

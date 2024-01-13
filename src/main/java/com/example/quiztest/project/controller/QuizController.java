@@ -2,8 +2,7 @@ package com.example.quiztest.project.controller;
 
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.CheckRequest;
-import com.example.quiztest.project.dto.QuizRequest;
-import com.example.quiztest.project.service.QuestionService;
+import com.example.quiztest.project.dto.quiz.QuizRequest;
 import com.example.quiztest.project.service.QuizService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;

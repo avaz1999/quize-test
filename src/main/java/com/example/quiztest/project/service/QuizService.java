@@ -2,7 +2,7 @@ package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.CheckRequest;
-import com.example.quiztest.project.dto.QuizRequest;
+import com.example.quiztest.project.dto.quiz.QuizRequest;
 import org.springframework.data.domain.Pageable;
 
 

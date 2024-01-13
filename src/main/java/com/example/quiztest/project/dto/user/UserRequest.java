@@ -1,4 +1,4 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

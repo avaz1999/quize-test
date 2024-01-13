@@ -1,4 +1,4 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.question;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.QuestionResponse;
+import com.example.quiztest.project.dto.question.QuestionResponse;
 import org.springframework.data.domain.Pageable;
 
 

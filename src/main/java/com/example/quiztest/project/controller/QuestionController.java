@@ -1,8 +1,7 @@
 package com.example.quiztest.project.controller;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.QuestionResponse;
-import com.example.quiztest.project.enums.Difficulty;
+import com.example.quiztest.project.dto.question.QuestionResponse;
 import com.example.quiztest.project.service.QuestionService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;

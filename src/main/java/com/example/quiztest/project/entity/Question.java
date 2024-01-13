@@ -1,7 +1,7 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.QuestionResponse;
+import com.example.quiztest.project.dto.question.QuestionResponse;
 import com.example.quiztest.project.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

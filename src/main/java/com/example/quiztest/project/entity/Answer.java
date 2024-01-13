@@ -1,7 +1,7 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.AnswerRequest;
+import com.example.quiztest.project.dto.answer.AnswerRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,12 +1,11 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.QuizRequest;
+import com.example.quiztest.project.dto.quiz.QuizRequest;
 import com.example.quiztest.project.enums.QuizStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

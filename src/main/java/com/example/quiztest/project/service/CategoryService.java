@@ -1,7 +1,7 @@
 package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.CategoryRequest;
+import com.example.quiztest.project.dto.category.CategoryRequest;
 import org.springframework.data.domain.Pageable;
 
 

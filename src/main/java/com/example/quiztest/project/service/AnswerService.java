@@ -1,9 +1,7 @@
 package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.AnswerRequest;
-
-import java.awt.print.Pageable;
+import com.example.quiztest.project.dto.answer.AnswerRequest;
 
 public interface AnswerService {
     ApiResponse<?> create(Long questionId, AnswerRequest request);

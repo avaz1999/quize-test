@@ -1,27 +1,21 @@
 package com.example.quiztest.project.service.impl;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.QuizResponse;
-import com.example.quiztest.project.dto.UserDTO;
-import com.example.quiztest.project.dto.UserRequest;
+import com.example.quiztest.project.dto.quiz.QuizResponse;
+import com.example.quiztest.project.dto.user.UserDTO;
+import com.example.quiztest.project.dto.user.UserRequest;
 import com.example.quiztest.project.entity.User;
-import com.example.quiztest.project.entity.UserTestResult;
-import com.example.quiztest.project.enums.QuizStatus;
 import com.example.quiztest.project.enums.UserRole;
 import com.example.quiztest.project.exception.UserNotFoundException;
 import com.example.quiztest.project.repositories.UserRepository;
 import com.example.quiztest.project.repositories.UserTestResultRepository;
 import com.example.quiztest.project.service.UserService;
 import com.example.quiztest.project.utils.ResponseMessage;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -1,6 +1,6 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.question;
 
-import com.example.quiztest.project.entity.Question;
+import com.example.quiztest.project.dto.answer.AnswerResponse;
 import com.example.quiztest.project.enums.Difficulty;
 import com.example.quiztest.project.projection.GetQuesrionForQuiz;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,7 +1,7 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.UserDTO;
+import com.example.quiztest.project.dto.user.UserDTO;
 import com.example.quiztest.project.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,7 +1,7 @@
 package com.example.quiztest.project.service.impl;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.CategoryRequest;
+import com.example.quiztest.project.dto.category.CategoryRequest;
 import com.example.quiztest.project.entity.Category;
 import com.example.quiztest.project.exception.CategoryNotFountException;
 import com.example.quiztest.project.repositories.CategoryRepository;

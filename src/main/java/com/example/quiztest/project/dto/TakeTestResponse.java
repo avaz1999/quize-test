@@ -1,5 +1,6 @@
 package com.example.quiztest.project.dto;
 
+import com.example.quiztest.project.dto.question.QuestionForTakeTestResponse;
 import com.example.quiztest.project.entity.Quiz;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.example.quiztest.project.entity;
 
 import com.example.quiztest.project.base.BaseEntity;
-import com.example.quiztest.project.dto.CategoryRequest;
+import com.example.quiztest.project.dto.category.CategoryRequest;
 import jakarta.persistence.Entity;
 import lombok.*;
 

@@ -2,6 +2,10 @@ package com.example.quiztest.project.service.impl;
 
 import com.example.quiztest.project.base.ApiResponse;
 import com.example.quiztest.project.dto.*;
+import com.example.quiztest.project.dto.answer.AnswerResponse;
+import com.example.quiztest.project.dto.question.QuestionForTakeTestResponse;
+import com.example.quiztest.project.dto.quiz.QuizRequest;
+import com.example.quiztest.project.dto.quiz.QuizeResponse;
 import com.example.quiztest.project.entity.*;
 import com.example.quiztest.project.enums.Difficulty;
 import com.example.quiztest.project.enums.QuizStatus;
@@ -16,9 +20,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -104,7 +106,8 @@ public class QuizServiceImpl implements QuizService {
         Quiz quiz = repository.findByIdAndDeletedFalse(quizId);
         if (quiz == null) throw new QuizNotFoundException();
 
-        List<GetQuesrionForQuiz> questionFor = questionRepository.getForQuiz(quiz.getCategory().getName(), quiz.getQuestionSize());
+        List<GetQuesrionForQuiz> questionFor = questionRepository.getForQuiz(
+                quiz.getCategory().getName(), quiz.getQuestionSize());
         List<QuestionForTakeTestResponse> responses = questionFor.stream()
                 .map(question -> {
                     List<AnswerResponse> answerResponses = answerRepository
@@ -119,7 +122,11 @@ public class QuizServiceImpl implements QuizService {
         quiz.setStatus(QuizStatus.IN_PROSES);
         List<Question> questions = questionFor.stream()
                 .map(
-                        i -> new Question(i.getId(),i.getTitle(), quiz.getCategory(), Difficulty.valueOf(i.getDifficulty()))).collect(Collectors.toList());
+                        i -> new Question(
+                                i.getId(),
+                                i.getTitle(),
+                                quiz.getCategory(),
+                                Difficulty.valueOf(i.getDifficulty()))).collect(Collectors.toList());
         Collections.shuffle(questions);
         quiz.setQuestions(questions);
         repository.save(quiz);

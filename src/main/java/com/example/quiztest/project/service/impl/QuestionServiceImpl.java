@@ -1,8 +1,8 @@
 package com.example.quiztest.project.service.impl;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.AnswerRequest;
-import com.example.quiztest.project.dto.QuestionResponse;
+import com.example.quiztest.project.dto.answer.AnswerRequest;
+import com.example.quiztest.project.dto.question.QuestionResponse;
 import com.example.quiztest.project.entity.Answer;
 import com.example.quiztest.project.entity.Category;
 import com.example.quiztest.project.entity.Question;

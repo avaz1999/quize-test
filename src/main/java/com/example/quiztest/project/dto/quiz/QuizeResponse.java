@@ -1,4 +1,4 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.quiz;
 
 import com.example.quiztest.project.entity.Quiz;
 import com.example.quiztest.project.entity.User;

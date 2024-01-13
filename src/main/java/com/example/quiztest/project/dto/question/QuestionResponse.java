@@ -1,8 +1,9 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.question;
 
+import com.example.quiztest.project.dto.answer.AnswerRequest;
+import com.example.quiztest.project.dto.category.CategoryForQuestionRequest;
 import com.example.quiztest.project.entity.Answer;
 import com.example.quiztest.project.entity.Question;
-import com.example.quiztest.project.enums.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

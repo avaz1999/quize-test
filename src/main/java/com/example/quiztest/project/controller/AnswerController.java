@@ -1,7 +1,7 @@
 package com.example.quiztest.project.controller;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.AnswerRequest;
+import com.example.quiztest.project.dto.answer.AnswerRequest;
 import com.example.quiztest.project.service.AnswerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,12 +1,9 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.answer;
 
 import com.example.quiztest.project.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

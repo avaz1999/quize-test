@@ -1,4 +1,4 @@
-package com.example.quiztest.project.dto;
+package com.example.quiztest.project.dto.category;
 
 import com.example.quiztest.project.entity.Category;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
 package com.example.quiztest.project.service;
 
 import com.example.quiztest.project.base.ApiResponse;
-import com.example.quiztest.project.dto.UserDTO;
-import com.example.quiztest.project.dto.UserRequest;
+import com.example.quiztest.project.dto.user.UserDTO;
+import com.example.quiztest.project.dto.user.UserRequest;
 import org.springframework.data.domain.Pageable;
 
 
